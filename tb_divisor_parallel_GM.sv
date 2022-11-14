@@ -22,32 +22,30 @@ end
 
 initial
 begin
-    reset();
-    Start = 0;
-
-    #(T*5)
-    CASO(-50,2,-25,0); // Positivo Postivo / Resto = 0   
-    
-    #(T*5)
-    CASO(7,2,3,1);   // Positivo Postivo / Resto != 0
-    
-	 
-	 #(T*5)
-    CASO(25,-5,-5,0);  // Positivo Negativo / Resto = 0
-   
-	 
-	 #(T*5)
-    CASO(-50,10,-5,0);  // Negativo Positivo / Resto = 0
-	 
-	 #(T*5)
-    CASO(7,0,3,1);   // Positivo Postivo / Resto != 0
-    
-	 
-	 #(T*5)
-    CASO(-8,-4,2,0);  // Negativo Negativo / Resto = 0
-   
-    $stop;
-
+	reset();
+	Start = 0;
+	
+//	#(T*5)
+	CASO(50,2,25,0);		// +/+,	Resto = 0   
+	
+	CASO(7,3,2,1);			// +/+,	Resto != 0
+	
+	CASO(25,-5,-5,0);		// +/-,	Resto = 0
+	
+	CASO(17,-4,-4,1);		// +/-, 	Resto != 0
+	
+	CASO(-50,10,-5,0);	// -/+,	Resto = 0
+	
+	CASO(-42,8,-5,-2);	// -/+,	Resto != 0
+	
+	CASO(-8,-4,2,0);		// -/-,	Resto = 0
+	
+	CASO(-9,-6,1,-3);		// -/-,	Resto != 0
+	
+	CASO(7,0,0,0);			// Denominador = 0
+	
+	#(T*5)
+	$stop;
 
 end
 
@@ -81,7 +79,6 @@ input [tamanyo-1:0] Den_user_Case;
 input [tamanyo-1:0] Coc_user_Case;
 input [tamanyo-1:0] Res_user_Case;
 begin
-	 @(negedge CLK)
     cargar(Num_user_Case,Den_user_Case);
 
     @(negedge CLK)

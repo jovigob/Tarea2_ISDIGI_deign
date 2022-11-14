@@ -43,14 +43,14 @@ always_ff @(posedge CLK, negedge RSTa)
 			Done <= 1'b0;
 			if(Start)
 				begin
-					assert (Den!=0) else $error("Ha habido un error. El denominador no puede ser 0");					
-					state <= D1;
-					ACCU <= 1'b0;
-					CONT <= tamanyo-1;
-					SignNum <= Num[tamanyo-1];
-					SignDen <= Den[tamanyo-1];
-					Q <= Num[tamanyo-1]? (~Num+1):Num;
-					M <= Den[tamanyo-1]? (~Den+1):Den;
+				assert (Den!=0) else $error("Ha habido un error. El denominador no puede ser 0");					
+				state <= D1;
+				ACCU <= 1'b0;
+				CONT <= tamanyo-1;
+				SignNum <= Num[tamanyo-1];
+				SignDen <= Den[tamanyo-1];
+				Q <= Num[tamanyo-1]? (~Num+1):Num;
+				M <= Den[tamanyo-1]? (~Den+1):Den;
 				end
 			else
 				state <= D0;
@@ -67,27 +67,18 @@ always_ff @(posedge CLK, negedge RSTa)
 		D2:
 			begin
 			CONT <= CONT-1;
-			if(CONT == 0)
+			if(ACCU>=M)
 				begin
+				Q <= Q+1;
+				ACCU <= ACCU-M;
+				end
+			if(!CONT)
 				state <= D3;
-				if(ACCU>=M)
-					begin
-					Q <= Q+1;
-					ACCU <= ACCU-M;
-					end
-				end
 			else
-				begin
 				state <= D1;
-				if(ACCU>=M)
-					begin                      //OPTIMIZAR
-					Q <= Q+1;
-					ACCU <= ACCU-M;
-					end
-				end
 			end
 			
-			
+					
 		D3:
 			begin
 			state <= D0;
